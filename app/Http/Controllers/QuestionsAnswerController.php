@@ -14,7 +14,8 @@ use DataTables;
 use Yajra\DataTables\QueryDataTable;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use App\Http\Requests\StoreQusetionRequest;
+use App\Http\Requests\StoreAnswerRequest;
+
 
 class QuestionsAnswerController extends Controller
 {
@@ -26,11 +27,15 @@ class QuestionsAnswerController extends Controller
 
     public function create()
     {
-        
+        $questions = Question::all()->pluck('body','id')->prepend('select from', '');
+        return view('questions_answers.create', [
+            'questions' => $questions,
+        ]);
     }
 
-    public function store()
+    public function store(StoreAnswerRequest $request)
     {
-
+       QuestionsAnswer::create($request->all());
+       return Redirect(route('questions_answer.index'));
     }
 }

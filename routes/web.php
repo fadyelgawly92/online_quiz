@@ -52,3 +52,6 @@ Route::delete('question/{id}/delete', 'QuestionController@delete')->name('questi
 //end questions
 
 //all about question answer
+Route::get('questionAnswer/form', 'QuestionsAnswerController@create')->name('questions_answer.form');
+Route::post('questionAnswer/create', 'QuestionsAnswerController@store')->name('questions_answer.create');
+Route::get('questionAnswer/index', 'QuestionsAnswerController@index')->name('questions_answer.index');

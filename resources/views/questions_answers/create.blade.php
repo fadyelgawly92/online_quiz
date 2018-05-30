@@ -2,7 +2,8 @@
 
 @section('content')
     <h3 class="page-title">answers</h3>
-    {!! Form::open(['method' => 'POST', 'route' => ['questions_answer.create']]) !!}
+    {!! Form::open(['method' => 'POST', 'route' => ['answer.create']]) !!}
+    {!! Form::token() !!}
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -36,9 +37,9 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 form-group">
-                    {!! Form::label('correct', 'Correct', ['class' => 'form-check-label']) !!}
-                    {!! Form::hidden('correct', 0) !!}
-                    {!! Form::checkbox('correct', 1, 0, ['class' => 'form-check-input']) !!}
+                    {!! Form::label('is_correct', 'Correct', ['class' => 'form-check-label']) !!}
+                    {!! Form::hidden('is_correct', 0) !!}
+                    {!! Form::checkbox('is_correct', 1, 0, ['class' => 'form-check-input']) !!}
                     <p class="help-block"></p>
                     @if($errors->has('correct'))
                         <p class="help-block">

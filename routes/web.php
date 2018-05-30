@@ -42,6 +42,7 @@ Route::get('users/{id}/delete','UserController@delete')->name('users.delete');
 Route::get('quiz/form', 'QuizController@create')->name('quiz.form');
 Route::post('quiz/create', 'QuizController@store')->name('quiz.create');
 Route::get('quiz/index', 'QuizController@index')->name('quiz.index');
+Route::get('quiz/{id}/show', 'QuizController@show')->name('quiz.show');
 //end quizzes
 
 //all about questions
@@ -53,5 +54,9 @@ Route::delete('question/{id}/delete', 'QuestionController@delete')->name('questi
 
 //all about question answer
 Route::get('questionAnswer/form', 'QuestionsAnswerController@create')->name('questions_answer.form');
-Route::post('questionAnswer/create', 'QuestionsAnswerController@store')->name('questions_answer.create');
+Route::post('answer/create','QuestionsAnswerController@store')->name('answer.create');
+// Route::post('questionAnswer/create', 'QuestionsAnswerController@store')->name('questions_answer.create');
 Route::get('questionAnswer/index', 'QuestionsAnswerController@index')->name('questions_answer.index');
+Route::get('questionAnswer/{id}/show', 'QuestionsAnswerController@show')->name('questions_answer.show');
+Route::get('questionAnswer/{id}/edit', 'QuestionsAnswerController@edit')->name('questions_answer.edit');
+Route::delete('questionAnswer/{id}/delete', 'QuestionsAnswerController@destory')->name('questions_answer.delete');

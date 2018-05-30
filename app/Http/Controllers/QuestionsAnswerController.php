@@ -38,4 +38,19 @@ class QuestionsAnswerController extends Controller
        QuestionsAnswer::create($request->all());
        return Redirect(route('questions_answer.index'));
     }
+
+    public function edit()
+    {
+        
+    }
+
+    public function show()
+    {
+
+    }
+
+    public function destroy()
+    {
+
+    }
 }

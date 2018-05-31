@@ -6,6 +6,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Traits\HasRoles;
 use App\Question;
+use App\Notifications\MailQuiz;
+use App\User;
 
 class Quiz extends Model
 {

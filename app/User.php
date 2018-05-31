@@ -5,6 +5,9 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use App\Notifications\MailQuiz;
 
 class User extends Authenticatable
 {
@@ -29,4 +32,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function sendEmailNotification($invoice)
+    {
+        // dd($invoice->user->id);
+        $this->notify(new MailQuiz($invoice->user));
+    }
+
+    public function routeNotificationForMail($notification)
+    {
+        // dd($this->email);
+        return $this->email;
+    }
 }

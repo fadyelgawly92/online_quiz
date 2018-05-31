@@ -2,7 +2,7 @@
 
 @section('content')
     <h3 class="page-title">quiz</h3>
-    {!! Form::open(['method' => 'POST', 'route' => ['quiz.create']]) !!}
+    {!! Form::open(['method' => 'POST', 'route' => ['quiz.send']]) !!}
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -42,6 +42,6 @@
     @endif
     </div>
 
-    {!! Form::submit('submit_quiz', ['class' => 'btn btn-danger']) !!}
+    {!! Form::submit('send to students', ['class' => 'btn btn-danger']) !!}
     {!! Form::close() !!}
 @endsection

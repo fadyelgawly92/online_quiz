@@ -15,6 +15,8 @@ use Yajra\DataTables\QueryDataTable;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Http\Requests\StoreQuizRequest;
+use App\Notifications\MailQuiz;
+use App\User;
 
 class QuizController extends Controller
 {
@@ -45,6 +47,26 @@ class QuizController extends Controller
             $question->questionAnswer = QuestionsAnswer::where('question_id',$question->id)->inRandomOrder()->get() ;
         }
         return view('quizzes.show',compact('quiz'));    
+    }
+
+    public function send_quiz()
+    {
+        // dd('here');
+        $users = User::permission('Approved')->get();
+        // dd($users);
+        foreach($users as $user){
+            // dd($user->id);
+            $invoice = new MailQuiz($user);
+            // dd($invoice);
+            $user->sendEmailNotification($invoice);
+        }
+
+        return Redirect(route('quiz.index'));
+    }
+
+    public function try()
+    {
+        dd('here');
     }
 
 }

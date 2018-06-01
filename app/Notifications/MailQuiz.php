@@ -13,15 +13,17 @@ class MailQuiz extends Notification implements ShouldQueue
     use Queueable;
 
     public $user ;
+    public $quiz ;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user , $quiz)
     {
         $this->user = $user;
+        $this->quiz = $quiz;
     }
 
     /**
@@ -43,7 +45,8 @@ class MailQuiz extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        $url = url('/mail/'.$this->user->id);
+        // dd($this->quiz);
+        $url = url('/mail/'.$this->user->id.'/quiz/'.$this->quiz);
 
         return (new MailMessage)
                     ->greeting('Hello!')

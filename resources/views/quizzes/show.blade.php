@@ -2,13 +2,13 @@
 
 @section('content')
     <h3 class="page-title">quiz</h3>
-    {!! Form::open(['method' => 'POST', 'route' => ['quiz.send']]) !!}
-
+    {!! Form::open(['method' => 'POST', 'route' => array('quiz.send',$quiz) ]) !!}
+    {{csrf_field()}}
     <div class="panel panel-default">
         <div class="panel-heading">
             Full Quiz
         </div>
-        <?php //dd($questions) ?>
+        <?php //dd($questions) ?>  
     @if(count($quiz->question) > 0)
         <div class="panel-body">
         <?php $i = 1; ?>

@@ -8,6 +8,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Notifications\MailQuiz;
+use App\Quiz;
 
 class User extends Authenticatable
 {
@@ -33,10 +34,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function sendEmailNotification($invoice)
+    public function sendEmailNotification($invoice , $quiz)
     {
         // dd($invoice->user->id);
-        $this->notify(new MailQuiz($invoice->user));
+        // dd($quiz);
+        $this->notify(new MailQuiz($invoice->user , $quiz));
     }
 
     public function routeNotificationForMail($notification)
@@ -44,4 +46,5 @@ class User extends Authenticatable
         // dd($this->email);
         return $this->email;
     }
+
 }

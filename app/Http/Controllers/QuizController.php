@@ -18,6 +18,7 @@ use App\Http\Requests\StoreQuizRequest;
 use App\Notifications\MailQuiz;
 use App\User;
 
+
 class QuizController extends Controller
 {
     public function index()
@@ -49,19 +50,20 @@ class QuizController extends Controller
         return view('quizzes.show',compact('quiz'));    
     }
 
-    public function send_quiz()
+    public function send_quiz($quiz)
     {
-        // dd('here');
         $users = User::permission('Approved')->get();
-        // dd($users);
         foreach($users as $user){
-            // dd($user->id);
-            $invoice = new MailQuiz($user);
-            // dd($invoice);
-            $user->sendEmailNotification($invoice);
+            $invoice = new MailQuiz($user , $quiz);
+            $user->sendEmailNotification($invoice , $quiz);
         }
-
         return Redirect(route('quiz.index'));
+    }
+
+    public function register($user , $quiz)
+    {
+        dd($user , $quiz);
+        
     }
 
     public function try()

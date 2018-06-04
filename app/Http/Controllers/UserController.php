@@ -13,6 +13,7 @@ use DataTables;
 use Yajra\DataTables\QueryDataTable;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Auth;
 
 
 class UserController extends Controller
@@ -51,8 +52,8 @@ class UserController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password,
-            'passwordConfirmation' => $request->passwordConfirmation
+            'password' => bcrypt($request->password),
+            'passwordConfirmation' => bcrypt($request->passwordConfirmation)
         ]);
         return Redirect(route('users.index'));
     }
@@ -72,5 +73,11 @@ class UserController extends Controller
     {
         User::where('id',$id)->delete();
         return response()->json(['status' => true]);
+    }
+
+    public function signout()
+    {
+        Auth::logout();
+        return Redirect(route('home'));
     }
 }

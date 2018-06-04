@@ -25,6 +25,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/signout','UserController@signout')->name('signout');
+
 //all about user
 Route::get('users/from' , 'UserController@create')->name('users.form');
 Route::post('users/create' , 'UserController@store')->name('users.create');
@@ -58,8 +60,6 @@ Route::delete('question/{id}/delete', 'QuestionController@delete')->name('questi
 //all about question answer
 Route::get('questionAnswer/form', 'QuestionsAnswerController@create')->name('questions_answer.form');
 Route::post('answer/create','QuestionsAnswerController@store')->name('answer.create');
-
-
 // Route::post('questionAnswer/create', 'QuestionsAnswerController@store')->name('questions_answer.create');
 Route::get('questionAnswer/index', 'QuestionsAnswerController@index')->name('questions_answer.index');
 Route::get('questionAnswer/{id}/show', 'QuestionsAnswerController@show')->name('questions_answer.show');
@@ -67,5 +67,7 @@ Route::get('questionAnswer/{id}/edit', 'QuestionsAnswerController@edit')->name('
 Route::delete('questionAnswer/{id}/delete', 'QuestionsAnswerController@destory')->name('questions_answer.delete');
 //
 
-//registration
+//registration of quiz
 Route::get('mail/{user}/quiz/{quiz}','QuizController@register')->name('quiz.register');
+Route::post('register/{user}/quiz/{quiz}','QuizController@quiz_answer')->name('quiz.answer');
+Route::post('quiz/submit','QuizController@try')->name('quiz.try');

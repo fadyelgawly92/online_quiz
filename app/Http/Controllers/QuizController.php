@@ -17,6 +17,9 @@ use Spatie\Permission\Models\Permission;
 use App\Http\Requests\StoreQuizRequest;
 use App\Notifications\MailQuiz;
 use App\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\MessageBag;
+use Validator;
 
 
 class QuizController extends Controller
@@ -62,8 +65,41 @@ class QuizController extends Controller
 
     public function register($user , $quiz)
     {
-        dd($user , $quiz);
-        
+        return view('quizzes.register',[
+            'user' => $user,
+            'quiz' => $quiz,
+        ]);
+    }
+
+    public function quiz_answer(Request $request ,$quiz , $user)
+    {
+        $rules = [
+            'name' => 'required',
+            'email' => 'required|email',
+        ];
+        $customMessages = [
+            'required' => 'The :attribute field can not be blank.'
+        ];
+        $this->validate($request, $rules, $customMessages);
+        $email = User::where('email',$request->email)->get();
+        $name = User::where('name',$request->name)->get();
+        if(!$email->isEmpty() && !$name->isEmpty()){
+            $myquiz = Quiz::findorFail($quiz);
+            $myquiz->question = Question::where('quiz_id', $quiz)->inRandomOrder()->get() ;
+            foreach($myquiz->question as $question){
+                $question->questionAnswer = QuestionsAnswer::where('question_id',$question->id)->inRandomOrder()->get() ;
+            }
+            return view('quizzes.resolve',[
+                'myquiz' => $myquiz,
+                'user' => $user,
+            ]);
+        }else{
+            $validator = Validator::make($request->all(), $rules, $customMessages);
+            $errors = $validator->errors()->add('email', 'Wrong information added in one of the fields !!');
+            // dd($errors);
+            return back()->withErrors($errors);
+        }
+
     }
 
     public function try()

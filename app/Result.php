@@ -20,7 +20,7 @@ class Result extends Model
      * @var array
      */
     protected $fillable = [
-        'quiz_id', 'question_id', 'questions_answer_id','user_id','is_correct',
+        'quiz_id', 'question_id', 'question_answer_id','user_id','is_correct',
     ];
 
         /**

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Quiz;
 use App\QuestionsAnswer;
 use App\Question;
+use App\Result;
 use Illuminate\Support\Facades\Redirect;
 use App\DataTables\UsersDataTable;
 use App\DataTables\UsersDataTablesEditor;
@@ -102,9 +103,33 @@ class QuizController extends Controller
 
     }
 
-    public function try()
+    public function submit_quiz(Request $request , $quiz ,$user)
     {
-        dd('here');
+        //  dd($request->input('questions'));
+        foreach($request->input('questions',[]) as $key => $question){
+            $status = 0;
+            // dd(QuestionsAnswer::find($request->input('answers',$question))->firstWhere('option', 'comment')->is_correct);
+            // dd(QuestionsAnswer::find($request->input('answers',$question))->first()->is_correct);
+            // dd(QuestionsAnswer::find($request->input('answers',$question))->each(function($item , $key){
+            //     return ($item->is_correct);
+            // }));
+            // dd($request->input('answers.'.$question));
+
+            if($request->input('answers.'.$question) != null 
+            && QuestionsAnswer::find($request->input('answers.'.$question))->is_correct ){
+
+                $status = 1;
+            }
+            Result::create([
+                'quiz_id' => $quiz ,
+                'question_id' => $question ,
+                'question_answer_id' => $request->input('answers.'.$question),
+                'user_id' => $user,
+                'is_correct' => $status ,
+            ]);
+        }
+
+        return Redirect(route('quiz.index'));
     }
 
 }

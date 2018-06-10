@@ -32,6 +32,6 @@
      
     <br/>
     <br/> 
-    <a href="{{route('users.index.dataTables')}}"><button class="btn btn-primary" >Return Back</button></a>
+    <a href="{{route('users.index')}}"><button class="btn btn-primary" >Return Back</button></a>
 
 @endsection

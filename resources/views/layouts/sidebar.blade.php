@@ -44,6 +44,9 @@
                     <li><a href="{{ route('quiz.form')}}">quiz form</a></li>
                     <li><a href="{{ route('question.form')}}">question form</a></li>
                     <li><a href="{{ route('questions_answer.form')}}">answers form</a></li>
+                    <li><a href="{{ route('questions_answer.index')}}">all answers</a></li>
+                    <li><a href="{{ route('quiz.index')}}">all quizzes</a></li>
+                    <li><a href="{{ route('question.index')}}">all questions</a></li>
                 </ul>
             </li> 
         </ul>

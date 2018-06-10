@@ -3,7 +3,7 @@
 @section('content')
     <p class="alert alert-danger" id="demo"></p>
     <h3 class="page-title">quiz</h3>
-    {!! Form::open(['method' => 'POST', 'route' => array('quiz.try',$myquiz,$user) ]) !!}
+    {!! Form::open(['method' => 'POST', 'route' => array('quiz.submit',$myquiz,$user) ]) !!}
     {{csrf_field()}}
     <div class="panel panel-default">
         <div class="panel-heading">

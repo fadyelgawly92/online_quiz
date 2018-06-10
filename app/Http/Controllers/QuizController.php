@@ -129,7 +129,7 @@ class QuizController extends Controller
             ]);
         }
 
-        return Redirect(route('quiz.index'));
+        return view('quizzes.finish');
     }
 
 }

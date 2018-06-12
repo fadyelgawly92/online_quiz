@@ -7,6 +7,7 @@ use App\Quiz;
 use App\QuestionsAnswer;
 use App\Question;
 use App\Result;
+use App\StudentsScores;
 use App\Jobs\RegistrationLink;
 use Illuminate\Support\Facades\Redirect;
 use App\DataTables\UsersDataTable;
@@ -112,20 +113,16 @@ class QuizController extends Controller
 
     public function submit_quiz(Request $request , $quiz ,$user)
     {
+        $score = 0 ;
+        $total = count($request->input('questions'));
         //  dd($request->input('questions'));
         foreach($request->input('questions',[]) as $key => $question){
             $status = 0;
-            // dd(QuestionsAnswer::find($request->input('answers',$question))->firstWhere('option', 'comment')->is_correct);
-            // dd(QuestionsAnswer::find($request->input('answers',$question))->first()->is_correct);
-            // dd(QuestionsAnswer::find($request->input('answers',$question))->each(function($item , $key){
-            //     return ($item->is_correct);
-            // }));
-            // dd($request->input('answers.'.$question));
 
             if($request->input('answers.'.$question) != null 
             && QuestionsAnswer::find($request->input('answers.'.$question))->is_correct ){
-
                 $status = 1;
+                $score++;
             }
             Result::create([
                 'quiz_id' => $quiz ,
@@ -136,6 +133,13 @@ class QuizController extends Controller
             ]);
         }
 
+        StudentsScores::create([
+            'quiz_id' => $quiz,
+            'user_id' => $user,
+            'score' => $score,
+            'total' => $total,
+        ]);
+   
         return view('quizzes.finish');
     }
 

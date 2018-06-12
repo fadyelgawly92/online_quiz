@@ -34,11 +34,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function sendEmailNotification($invoice , $quiz)
+    public function sendEmailNotification($invoice , $quiz , $delay)
     {
         // dd($invoice->user->id);
         // dd($quiz);
-        $this->notify(new MailQuiz($invoice->user , $quiz));
+        $when = now()->addSeconds($delay);
+        $this->notify((new MailQuiz($invoice->user , $quiz))->delay($when));
     }
 
     public function routeNotificationForMail($notification)

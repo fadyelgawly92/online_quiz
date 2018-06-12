@@ -7,6 +7,7 @@ use App\Quiz;
 use App\QuestionsAnswer;
 use App\Question;
 use App\Result;
+use App\Jobs\RegistrationLink;
 use Illuminate\Support\Facades\Redirect;
 use App\DataTables\UsersDataTable;
 use App\DataTables\UsersDataTablesEditor;
@@ -21,6 +22,7 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\MessageBag;
 use Validator;
+use Carbon\Carbon;
 
 
 class QuizController extends Controller
@@ -54,12 +56,17 @@ class QuizController extends Controller
         return view('quizzes.show',compact('quiz'));    
     }
 
-    public function send_quiz($quiz)
+    public function send_quiz(Request $request,$quiz)
     {
+
+        $date = $request->input('date');
+        $time = \Carbon\Carbon::parse($date)->timestamp;
+        $now = Carbon::now()->timestamp;
+        $delay = $time - $now; //this is the difference in seconds between the 2 dates
         $users = User::permission('Approved')->get();
         foreach($users as $user){
             $invoice = new MailQuiz($user , $quiz);
-            $user->sendEmailNotification($invoice , $quiz);
+            $user->sendEmailNotification($invoice , $quiz , $delay);
         }
         return Redirect(route('quiz.index'));
     }

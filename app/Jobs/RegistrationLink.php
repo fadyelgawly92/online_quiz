@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -17,9 +18,14 @@ class RegistrationLink implements ShouldQueue
      *
      * @return void
      */
+
+    // public $invoice ;
+    // public $quiz ;
+
     public function __construct()
     {
-        //
+        // $this->invoice = $invoice;
+        // $this->quiz = $quiz;
     }
 
     /**
@@ -29,6 +35,11 @@ class RegistrationLink implements ShouldQueue
      */
     public function handle()
     {
-        //
+        // dd($this->invoice->user);
+        // Mail::queue('emails.send', ['user'=> $this->invoice->user ,'quiz' => $this->quiz ], function ($message) {
+        //     $message->from('john@johndoe.com', 'John Doe');
+        //     $message->to($this->invoice->user->email, $this->invoice->user->name);
+        //     $message->subject('Subject');
+        // });
     }
 }

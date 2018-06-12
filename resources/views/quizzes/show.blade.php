@@ -41,6 +41,13 @@
         </div>
     @endif
     </div>
+    <div class="form-group {{ $errors->has('date') ? 'has-error' : '' }}">
+        {{ Form::label('date', 'sending time', ['class'=>'control-label']) }}
+        {{ Form::input('datetime-local', 'date', null, ['class'=>'form-control']) }}		
+        {{ $errors->first('date', '<span class="help-block">:message</span>') }}
+    </div>
+
+
 
     {!! Form::submit('send to students', ['class' => 'btn btn-danger']) !!}
     {!! Form::close() !!}

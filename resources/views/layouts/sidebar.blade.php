@@ -49,6 +49,7 @@
                     <li><a href="{{ route('question.index')}}">all questions</a></li>
                 </ul>
             </li> 
+            <li><a href="{{ route('graph.view')}}"><span>Chart View</span></a></li>
         </ul>
         <!-- /.sidebar-menu -->
     </section>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\StudentsScores;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreFormRequest ;
 use App\DataTables\UsersDataTable;
@@ -79,5 +80,32 @@ class UserController extends Controller
     {
         Auth::logout();
         return Redirect(route('home'));
+    }
+
+    public function chart()
+    {
+        $names=[];
+        $scores=[];
+        $users = User::permission('Approved')->get();
+        foreach($users as $user){
+            $i = 0;
+            array_push($names ,$user->name) ; 
+            $score = StudentsScores::where('user_id',$user->id)->select('score')->get();
+            // dd(count($score));
+            $total = StudentsScores::where('user_id',$user->id)->select('total')->get();
+            do{
+                if (! $score->isEmpty()){
+                    $final = ($score[$i]['score']/$total[$i]['total'])*100 ;
+                }else{
+                    $final = 0;
+                }
+                array_push($scores,$final);
+                $i++;
+            }while($i <count($score));
+            
+        }
+        // dd($scores[6][0]['total']); very important information
+        dd($scores);
+        return view('charts.chart');
     }
 }

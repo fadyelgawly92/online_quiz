@@ -71,3 +71,6 @@ Route::delete('questionAnswer/{id}/delete', 'QuestionsAnswerController@destory')
 Route::get('mail/{user}/quiz/{quiz}','QuizController@register')->name('quiz.register');
 Route::post('register/{user}/quiz/{quiz}','QuizController@quiz_answer')->name('quiz.answer');
 Route::post('quiz/{quiz}/user/{user}/submit','QuizController@submit_quiz')->name('quiz.submit');
+
+//charts
+Route::get('chart/show','UserController@chart')->name('graph.view');

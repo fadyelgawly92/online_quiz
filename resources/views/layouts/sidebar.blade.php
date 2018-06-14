@@ -35,7 +35,7 @@
             <li><a href="{{ route('users.index')}}"><span>All Users</span></a></li>
             <li><a href="{{ route('users.approved')}}"><span>Choosed Students</span></a></li>
             <li class="treeview">
-                <a href="#"><i class="fa fa-link"></i> <span>Choosed Students</span>
+                <a href="#"><i class="fa fa-link"></i> <span>My list</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>

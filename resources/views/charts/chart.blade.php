@@ -8,13 +8,16 @@
     <canvas id="line-chart" width="800" height="450"></canvas>
 
     <script>
+        var scores = {!! json_encode($scores) !!};
+        var names = {!! json_encode($names) !!}
+
         new Chart(document.getElementById("line-chart"), {
         type: 'line',
         data: {
-            labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
+            labels: names,
             datasets: [{ 
-                data: [282,350,411,502,635,809,947,1402,3700,5267],
-                label: "Asia",
+                data: scores,
+                label: "students",
                 borderColor: "#8e5ea2",
                 fill: false
             }]
@@ -22,7 +25,7 @@
         options: {
             title: {
             display: true,
-            text: 'World population per region (in millions)'
+            text: 'students scores in the online quiz'
             }
         }
         });

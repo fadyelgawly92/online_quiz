@@ -105,7 +105,7 @@ class UserController extends Controller
             
         }
         // dd($scores[6][0]['total']); very important information
-        dd($scores);
-        return view('charts.chart');
+        // dd($scores);
+        return view('charts.chart',compact('names','scores'));
     }
 }

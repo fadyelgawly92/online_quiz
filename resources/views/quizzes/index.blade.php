@@ -28,6 +28,17 @@
                             <tr data-entry-id="{{ $quiz->id }}">
                                 <td></td>
                                 <td>{{ $quiz->name }}</td>
+                                <td>
+                                    <a href="{{ route('quiz.show',[$quiz->id])}}" class="btn btn-xs btn-primary">View</a>
+                                    <a href="{{ route('quiz.edit',[$quiz->id])}}" class="btn btn-xs btn-info">edit</a>
+                                    {!! Form::open(array(
+                                        'style' => 'display: inline-block;',
+                                        'method' => 'delete',
+                                        'onsubmit' => "return confirm('are you sure ?');",
+                                        'route' => ['quiz.delete' , $quiz->id])) !!}
+                                    {!! Form::submit('delete', array('class' => 'btn btn-xs btn-danger')) !!}
+                                    {!! Form::close() !!}  
+                                </td>
                             </tr>
                         @endforeach
                     @endif

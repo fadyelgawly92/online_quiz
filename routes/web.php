@@ -47,6 +47,8 @@ Route::get('quiz/form', 'QuizController@create')->name('quiz.form');
 Route::post('quiz/create', 'QuizController@store')->name('quiz.create');
 Route::get('quiz/index', 'QuizController@index')->name('quiz.index');
 Route::get('quiz/{id}/show', 'QuizController@show')->name('quiz.show');
+Route::get('quiz/{id}/edit', 'QuizController@edit')->name('quiz.edit');
+Route::delete('quiz/{id}/delete', 'QuizController@delete')->name('quiz.delete');
 Route::post('quiz/send/{quiz}','QuizController@send_quiz')->name('quiz.send');
 //end quizzes
 

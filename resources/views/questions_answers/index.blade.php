@@ -16,7 +16,6 @@
             <table class="table table-bordered table-striped {{ count($questions_answers) > 0 ? 'datatable' : '' }} dt-select">
                 <thead>
                     <tr>
-                        <th style="text-align:center;"><input type="checkbox" id="select-all"></th>
                         <th>Question</th>
                         <th>Option</th>
                         <th>Correct</th>
@@ -28,7 +27,6 @@
                     @if (count($questions_answers) >0)
                         @foreach($questions_answers as $questions_answer)
                             <tr data-entry-id="{{ $questions_answer->id }}">
-                                <td></td>
                                 <td>{{ $questions_answer->question->body or '' }}</td>
                                 <td>{{ $questions_answer->option }}</td>
                                 <td>{{ $questions_answer->is_correct == 1 ? 'Yes' : 'No' }}</td>

@@ -56,6 +56,33 @@ class QuestionController extends Controller
 
     }
 
+    public function show($id)
+    {
+        $relations = [
+            'quizzes' => \App\Quiz::get()->pluck('name', 'id')->prepend('Please select', ''),
+        ];
+        $question = Question::findOrFail($id);
+        return view('questions.show', compact('question') + $relations);
+    }
+
+    public function edit($id)
+    {
+        $relations = [
+            'quiz' => \App\Quiz::get()->pluck('name', 'id')->prepend('Please select', ''),
+        ];
+        $question = Question::findOrFail($id);
+        return view('questions.edit', compact('question') + $relations);
+    }
+
+    public function update(Request $request , $id)
+    {
+        $question = Question::findOrFail($id);
+        $question->update([
+            'body' => $request->input('body')
+        ]);
+        return Redirect(route('question.index'));
+    }
+
     public function delete($id)
     {
         DB::table('questions_answers')->where('question_id','=',$id)->delete();

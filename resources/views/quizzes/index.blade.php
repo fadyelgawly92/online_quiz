@@ -4,7 +4,7 @@
     <h3 class="page-title">All tests</h3>
 
     <p>
-        <a href="{{ route('quiz.create') }}" class="btn btn-success">Create Quiz</a>
+        <a href="{{ route('quiz.form') }}" class="btn btn-success">Create Quiz</a>
     </p>
 
     <div class="panel panel-default">
@@ -16,7 +16,6 @@
             <table class="table table-bordered table-striped {{ count($quizzes) > 0 ? 'datatable' : '' }} dt-select">
                 <thead>
                     <tr>
-                        <th style="text-align:center;"><input type="checkbox" id="select-all" /></th>
                         <th>name</th>
                         <th>&nbsp;</th>
                     </tr>
@@ -26,7 +25,6 @@
                     @if (count($quizzes) > 0)
                         @foreach ($quizzes as $quiz)
                             <tr data-entry-id="{{ $quiz->id }}">
-                                <td></td>
                                 <td>{{ $quiz->name }}</td>
                                 <td>
                                     <a href="{{ route('quiz.show',[$quiz->id])}}" class="btn btn-xs btn-primary">View</a>

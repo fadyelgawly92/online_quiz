@@ -57,6 +57,33 @@ class QuizController extends Controller
         return view('quizzes.show',compact('quiz'));    
     }
 
+    public function edit($id)
+    {
+        $quiz = Quiz::findorFail($id);
+        return view('quizzes.edit', compact('quiz'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $quiz = Quiz::findorFail($id);
+        $quiz->update([
+            'name' => $request->name
+            ]);
+        return Redirect(route('quiz.index'));
+    }
+
+    public function destroy($id)
+    {
+        $quiz = Quiz::findorFail($id);
+        $questionId = Question::where('quiz_id',$id)->select('id')->get();
+        for($i = 0;$i < count($questionId);$i++){
+            $answers = QuestionsAnswer::where('question_id',$questionId[$i]['id'])->delete();
+        }
+        $questionId = Question::where('quiz_id',$id)->delete();
+        $quiz->delete();
+        return Redirect(route('quiz.index'));
+    }
+
     public function send_quiz(Request $request,$quiz)
     {
 

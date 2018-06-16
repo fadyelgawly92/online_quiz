@@ -4,7 +4,7 @@
     <h3 class="page-title">our question</h3>
 
     <p>
-        <a href="{{ route('question.create') }}" class="btn btn-success">create question</a>
+        <a href="{{ route('question.form') }}" class="btn btn-success">create question</a>
     </p>
 
     <div class="panel panel-default">
@@ -16,7 +16,6 @@
             <table class="table table-bordered table-striped {{ count($questions) > 0 ? 'datatable' : '' }} dt-select">
                 <thead>
                     <tr>
-                        <th style="text-align:center;"><input type="checkbox" id="select-all" /></th>
                         <th>quiz</th>
                         <th>body</th>
                         <th>&nbsp;</th>
@@ -27,10 +26,11 @@
                     @if (count($questions) > 0)
                         @foreach ($questions as $question)
                             <tr data-entry-id="{{ $question->id }}">
-                                <td></td>
                                 <td>{{ $question->quiz->name or '' }}</td>
                                 <td>{!! $question->body !!}</td>
                                 <td>
+                                    <a href="{{ route('question.show',[$question->id])}}" class="btn btn-xs btn-primary">View</a>
+                                    <a href="{{ route('question.edit',[$question->id])}}" class="btn btn-xs btn-info">edit</a>
                                     {!! Form::open(array(
                                         'style' => 'display: inline-block;',
                                         'method' => 'DELETE',

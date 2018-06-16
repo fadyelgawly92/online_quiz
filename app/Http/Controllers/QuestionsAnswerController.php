@@ -39,18 +39,35 @@ class QuestionsAnswerController extends Controller
        return Redirect(route('questions_answer.index'));
     }
 
-    public function edit()
+    public function show($id)
     {
-        
+        $relations = [
+            'questions' => \App\Question::get()->pluck('body', 'id')->prepend('Please select', ''),
+        ];
+        $questions_option = QuestionsAnswer::findOrFail($id);
+        return view('questions_answers.show', compact('questions_option') + $relations);
     }
 
-    public function show()
+    public function edit($id)
     {
-
+        $relations = [
+            'questions' => \App\Question::get()->pluck('body', 'id')->prepend('Please select', ''),
+        ];
+        $questions_option = QuestionsAnswer::findOrFail($id);
+        return view('questions_answers.edit', compact('questions_option') + $relations);
     }
 
-    public function destroy()
+    public function update(Request $request , $id)
     {
+        $questionsoption = QuestionsAnswer::findOrFail($id);
+        $questionsoption->update($request->all());
+        return Redirect(route('questions_answer.index'));
+    }
 
+    public function destroy($id)
+    {
+        $questions_option = QuestionsAnswer::findOrFail($id);
+        $questions_option->delete();
+        return Redirect(route('questions_answer.index'));
     }
 }

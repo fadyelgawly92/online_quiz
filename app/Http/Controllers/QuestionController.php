@@ -88,6 +88,6 @@ class QuestionController extends Controller
         DB::table('questions_answers')->where('question_id','=',$id)->delete();
         $question = Question::findOrFail($id);
         $question->delete();
-        return redirect()->route('question.index');
+        return Redirect(route('question.index'));
     }
 }

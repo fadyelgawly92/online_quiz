@@ -70,6 +70,7 @@ Route::post('answer/create','QuestionsAnswerController@store')->name('answer.cre
 Route::get('questionAnswer/index', 'QuestionsAnswerController@index')->name('questions_answer.index');
 Route::get('questionAnswer/{id}/show', 'QuestionsAnswerController@show')->name('questions_answer.show');
 Route::get('questionAnswer/{id}/edit', 'QuestionsAnswerController@edit')->name('questions_answer.edit');
+Route::put('questionAnswer/{id}/update', 'QuestionsAnswerController@update')->name('questions_answer.update');
 Route::delete('questionAnswer/{id}/delete', 'QuestionsAnswerController@destory')->name('questions_answer.delete');
 //
 

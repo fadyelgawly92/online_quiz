@@ -108,6 +108,8 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'faker_locale' =>  env('FAKER_LOCALE', 'en_US'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

@@ -40,6 +40,7 @@ Route::get('users/approved','UserController@approvedIndex')->name('users.approve
 
 Route::get('users/{id}/edit','UserController@edit')->name('users.edit');
 Route::get('users/{id}/delete','UserController@delete')->name('users.delete');
+Route::get('users/message','UserController@message')->name('users.message');
 //end users
 
 //all about quizzes

@@ -10,6 +10,7 @@ use App\Http\Requests\StoreFormRequest ;
 use App\DataTables\UsersDataTable;
 use App\DataTables\UsersDataTablesEditor;
 use DB;
+use Illuminate\Notifications\Messages\NexmoMessage;
 use DataTables;
 use Yajra\DataTables\QueryDataTable;
 use Spatie\Permission\Models\Role;
@@ -107,5 +108,36 @@ class UserController extends Controller
         // dd($scores[6][0]['total']); very important information
         // dd($scores);
         return view('charts.chart',compact('names','scores'));
+    }
+
+    public function message()
+    {
+        $users = User::permission('Approved')->get();
+        foreach($users as $user){
+            $i = 0;
+            $score = StudentsScores::where('user_id',$user->id)->select('score')->get();
+            $total = StudentsScores::where('user_id',$user->id)->select('total')->get();
+            do{
+                if (! $score->isEmpty()){
+                    $final = ($score[$i]['score']/$total[$i]['total'])*100 ;
+                    $nexmo = app('Nexmo\Client');
+                    $nexmo->message()->send([
+                        'to'   => $user->phone_number,
+                        'from' => '201226134748',
+                        'text' => 'Your score in our Exam is '.$final.'% Thank you for your participation' 
+                    ]);
+                }else{
+                    $final = 0;
+                    $nexmo = app('Nexmo\Client');
+                    $nexmo->message()->send([
+                        'to'   => $user->phone_number,
+                        'from' => '201226134748',
+                        'text' => 'Your score in our Exam is '.$final.'% Thank you for your participation' 
+                    ]);
+                }
+                $i++;
+            }while($i <count($score));
+        }
+        return Redirect(route('users.index'));
     }
 }

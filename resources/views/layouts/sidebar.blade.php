@@ -50,7 +50,6 @@
                 </ul>
             </li> 
             <li><a href="{{ route('graph.choose')}}"><span>Chart View</span></a></li>
-            <li><a href="{{ route('users.message')}}"><span>Send Message</span></a></li>
         </ul>
         <!-- /.sidebar-menu -->
     </section>

@@ -45,9 +45,7 @@ class MailQuiz extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        // dd($this->quiz);
-        $url = url('http://127.0.0.1:8000/mail/'.$this->user->id.'/quiz/'.$this->quiz);
-
+        $url = url('http://finaliti.local/mail/'.$this->user->id.'/quiz/'.$this->quiz);
         return (new MailMessage)
                     ->greeting('Hello!')
                     ->line('This is the link for your online exam.')

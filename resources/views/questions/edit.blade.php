@@ -41,4 +41,4 @@
 
     {!! Form::submit('save', ['class' => 'btn btn-danger']) !!}
     {!! Form::close() !!}
-@stop
+@endsection

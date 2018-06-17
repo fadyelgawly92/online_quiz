@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Quiz;
 use App\StudentsScores;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreFormRequest ;
@@ -83,17 +84,27 @@ class UserController extends Controller
         return Redirect(route('home'));
     }
 
-    public function chart()
+    public function chartControl()
     {
+        $relations = [
+            'quiz' => \App\Quiz::get()->pluck('name', 'id')->prepend('Please select', ''),
+        ];
+        $quizzes = Quiz::all();
+        return view('charts.show', compact('quizzes') + $relations);
+    }
+
+    public function chart(Request $request)
+    {
+        $quizId = $request->input('id');
+        // dd($quizId);
         $names=[];
         $scores=[];
         $users = User::permission('Approved')->get();
         foreach($users as $user){
             $i = 0;
             array_push($names ,$user->name) ; 
-            $score = StudentsScores::where('user_id',$user->id)->select('score')->get();
-            // dd(count($score));
-            $total = StudentsScores::where('user_id',$user->id)->select('total')->get();
+            $score = StudentsScores::where('user_id',$user->id)->where('quiz_id',$quizId)->select('score')->get();
+            $total = StudentsScores::where('user_id',$user->id)->where('quiz_id',$quizId)->select('total')->get();
             do{
                 if (! $score->isEmpty()){
                     $final = ($score[$i]['score']/$total[$i]['total'])*100 ;
@@ -107,16 +118,21 @@ class UserController extends Controller
         }
         // dd($scores[6][0]['total']); very important information
         // dd($scores);
-        return view('charts.chart',compact('names','scores'));
+        return view('charts.chart',[
+            'names' => $names,
+            'scores' => $scores,
+            'quizId' => $quizId,
+        ]);
     }
 
-    public function message()
+    public function message($id)
     {
+        // dd($id);
         $users = User::permission('Approved')->get();
         foreach($users as $user){
             $i = 0;
-            $score = StudentsScores::where('user_id',$user->id)->select('score')->get();
-            $total = StudentsScores::where('user_id',$user->id)->select('total')->get();
+            $score = StudentsScores::where('user_id',$user->id)->where('quiz_id',$id)->select('score')->get();
+            $total = StudentsScores::where('user_id',$user->id)->where('quiz_id',$id)->select('total')->get();
             do{
                 if (! $score->isEmpty()){
                     $final = ($score[$i]['score']/$total[$i]['total'])*100 ;

@@ -40,7 +40,7 @@ Route::get('users/approved','UserController@approvedIndex')->name('users.approve
 
 Route::get('users/{id}/edit','UserController@edit')->name('users.edit');
 Route::get('users/{id}/delete','UserController@delete')->name('users.delete');
-Route::get('users/message','UserController@message')->name('users.message');
+Route::get('users/{id}/message','UserController@message')->name('users.message');
 //end users
 
 //all about quizzes
@@ -81,4 +81,5 @@ Route::post('register/{user}/quiz/{quiz}','QuizController@quiz_answer')->name('q
 Route::post('quiz/{quiz}/user/{user}/submit','QuizController@submit_quiz')->name('quiz.submit');
 
 //charts
-Route::get('chart/show','UserController@chart')->name('graph.view');
+Route::get('chart/choose','UserController@chartControl')->name('graph.choose');
+Route::post('chart/show','UserController@chart')->name('graph.view');

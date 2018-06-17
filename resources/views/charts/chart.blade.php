@@ -30,6 +30,7 @@
         }
         });
     </script> 
+    <a href="{{ route('users.message' , ['id' => $quizId ]) }}" class="btn btn-default">send to students</a>
 </div> 
 </body>
 </html> 

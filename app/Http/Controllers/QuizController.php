@@ -25,7 +25,7 @@ use Illuminate\Support\MessageBag;
 use Validator;
 use Carbon\Carbon;
 use jpmurray\LaravelCountdown\Countdown;
-use Illuminate\Support\Facades\Session;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 
 
@@ -126,9 +126,8 @@ class QuizController extends Controller
         $now = Carbon::now()->timestamp;
         $then = Carbon::now()->addMinutes(30)->timestamp;
         $total = $then - $now;
-        // $time = gmdate("H:i:s", $total);
-        $value = $request->session()->get('mytime');
-        if(! Session::has('mytime')){
+        // $time = gmdate("H:i:s", $total);    
+        if(! $request->session()->has('mytime')){
             $request->session()->start();
             $request->session()->put('mytime',$total);
         }
@@ -151,14 +150,14 @@ class QuizController extends Controller
             // dd($errors);
             return back()->withErrors($errors);
         }
-        // <script src="{{asset('js/countdown.js')}}"></script>
     }
 
     public function update_session(Request $request)
     {
-       Session::remove('mytime'); 
-       $time = $request->newtime;
-       Session::set('mytime', $time); 
+       $time = $request->newtime; 
+       $request->session()->forget('mytime'); 
+       $request->session()->put('mytime',$time);
+       $setTime = $request->session()->get('mytime'); 
        return response()->json(['status' => true]);
     }
 

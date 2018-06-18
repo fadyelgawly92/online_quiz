@@ -87,10 +87,10 @@
             document.getElementById("mydemo").innerHTML = "Expired";
         }
         $.ajax({
-                type:'POST',
-                url: '/update/session',
+                type:'get',
+                url: '{{route('session.update')}}',
                 data: { 
-                    newtime: document.getElementById("time").innerHTML,  
+                    "newtime": document.getElementById("time").innerHTML,  
                 },
                 success:function(response){
                   console.log(response.status);   

@@ -24,6 +24,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\MessageBag;
 use Validator;
 use Carbon\Carbon;
+use jpmurray\LaravelCountdown\Countdown;
+use Illuminate\Support\Facades\Session;
+
+
 
 
 class QuizController extends Controller
@@ -119,6 +123,16 @@ class QuizController extends Controller
         $this->validate($request, $rules, $customMessages);
         $email = User::where('email',$request->email)->get();
         $name = User::where('name',$request->name)->get();
+        $now = Carbon::now()->timestamp;
+        $then = Carbon::now()->addMinutes(30)->timestamp;
+        $total = $then - $now;
+        // $time = gmdate("H:i:s", $total);
+        $value = $request->session()->get('mytime');
+        if(! Session::has('mytime')){
+            $request->session()->start();
+            $request->session()->put('mytime',$total);
+        }
+        // dd($newvalue);
         if(!$email->isEmpty() && !$name->isEmpty()){
             $myquiz = Quiz::findorFail($quiz);
             $myquiz->question = Question::where('quiz_id', $quiz)->inRandomOrder()->get() ;
@@ -128,6 +142,8 @@ class QuizController extends Controller
             return view('quizzes.resolve',[
                 'myquiz' => $myquiz,
                 'user' => $user,
+                'now' => $now,
+                'then' => $then
             ]);
         }else{
             $validator = Validator::make($request->all(), $rules, $customMessages);
@@ -135,7 +151,15 @@ class QuizController extends Controller
             // dd($errors);
             return back()->withErrors($errors);
         }
+        // <script src="{{asset('js/countdown.js')}}"></script>
+    }
 
+    public function update_session(Request $request)
+    {
+       Session::remove('mytime'); 
+       $time = $request->newtime;
+       Session::set('mytime', $time); 
+       return response()->json(['status' => true]);
     }
 
     public function submit_quiz(Request $request , $quiz ,$user)

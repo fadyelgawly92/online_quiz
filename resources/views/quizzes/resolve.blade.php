@@ -21,7 +21,8 @@
 </nav>
 
 <div class="container">
-    <p class="alert alert-danger" id="demo"></p>
+    <p class="alert alert-danger" id="mydemo"></p>
+    <div class="alert alert-danger" id="time" style="display: none;"></div>
     <h3 class="page-title">quiz</h3>
     {!! Form::open(['method' => 'POST', 'route' => array('quiz.submit',$myquiz,$user) ]) !!}
     {{csrf_field()}}
@@ -65,7 +66,43 @@
 
     {!! Form::submit('submit', array('class' => 'btn btn-danger' , 'id' => 'submitBtn')  ) !!}
     {!! Form::close() !!}
-    <script src="{{asset('js/countdown.js')}}"></script>
+    <script>
+        var submitBtn = document.getElementById('submitBtn');
+        var time = {!! json_encode(Session::get('mytime')) !!};
+        var newtime =  time - 1 ;
+        var x = setInterval(function(){
+            newtime -= 1 ;
+            var totalNumberOfSeconds = newtime ;
+            var hours = parseInt( totalNumberOfSeconds / 3600 );
+            var minutes = parseInt( (totalNumberOfSeconds - (hours * 3600)) / 60 );
+            var seconds = Math.floor((totalNumberOfSeconds - ((hours * 3600) + (minutes * 60))));
+            var result = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds  < 10 ? "0" + seconds : seconds)
+    
+            document.getElementById("mydemo").innerHTML = "Time Limit : " + result;
+            document.getElementById("time").innerHTML = newtime;    
+
+        if(newtime < 0){
+            clearInterval(x);
+            submitBtn.click();
+            document.getElementById("mydemo").innerHTML = "Expired";
+        }
+        $.ajax({
+                type:'POST',
+                url: '/update/session',
+                data: { 
+                    newtime: document.getElementById("time").innerHTML,  
+                },
+                success:function(response){
+                  console.log(response.status);   
+                },
+                error:function(){
+                   console.log('not fine');
+                }
+         });
+
+        }, 1000);
+    </script>
+    
 </div>
 
 </body>

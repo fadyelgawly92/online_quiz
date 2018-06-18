@@ -96,7 +96,6 @@ class UserController extends Controller
     public function chart(Request $request)
     {
         $quizId = $request->input('id');
-        // dd($quizId);
         $names=[];
         $scores=[];
         $users = User::permission('Approved')->get();
@@ -127,7 +126,6 @@ class UserController extends Controller
 
     public function message($id)
     {
-        // dd($id);
         $users = User::permission('Approved')->get();
         foreach($users as $user){
             $i = 0;

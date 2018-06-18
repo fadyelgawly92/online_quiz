@@ -23,11 +23,14 @@ Route::get('admin', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
 
 Route::get('/signout','UserController@signout')->name('signout');
 
 //all about user
+Route::group(['middleware' => ['permission:admin']], function () {
+
+Route::get('/home', 'HomeController@index')->name('home');    
 Route::get('users/from' , 'UserController@create')->name('users.form');
 Route::post('users/create' , 'UserController@store')->name('users.create');
 
@@ -75,11 +78,11 @@ Route::put('questionAnswer/{id}/update', 'QuestionsAnswerController@update')->na
 Route::delete('questionAnswer/{id}/delete', 'QuestionsAnswerController@destory')->name('questions_answer.delete');
 //
 
+//charts
+Route::get('chart/choose','UserController@chartControl')->name('graph.choose');
+Route::post('chart/show','UserController@chart')->name('graph.view');
+});
 //registration of quiz
 Route::get('mail/{user}/quiz/{quiz}','QuizController@register')->name('quiz.register');
 Route::post('register/{user}/quiz/{quiz}','QuizController@quiz_answer')->name('quiz.answer');
 Route::post('quiz/{quiz}/user/{user}/submit','QuizController@submit_quiz')->name('quiz.submit');
-
-//charts
-Route::get('chart/choose','UserController@chartControl')->name('graph.choose');
-Route::post('chart/show','UserController@chart')->name('graph.view');

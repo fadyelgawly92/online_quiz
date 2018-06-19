@@ -54,7 +54,7 @@ class QuizController extends Controller
     public function show($id)
     {
         $quiz = Quiz::findorFail($id);
-        $quiz->question = Question::where('quiz_id', $id)->inRandomOrder()->get() ;
+        $quiz->question = Question::where('quiz_id', $id)->paginate(10) ;
         foreach($quiz->question as $question){
             $question->questionAnswer = QuestionsAnswer::where('question_id',$question->id)->inRandomOrder()->get() ;
         }
@@ -90,7 +90,7 @@ class QuizController extends Controller
 
     public function send_quiz(Request $request,$quiz)
     {
-
+        
         $date = $request->input('date');
         $time = \Carbon\Carbon::parse($date)->timestamp;
         $now = Carbon::now()->timestamp;
@@ -134,9 +134,9 @@ class QuizController extends Controller
         // dd($newvalue);
         if(!$email->isEmpty() && !$name->isEmpty()){
             $myquiz = Quiz::findorFail($quiz);
-            $myquiz->question = Question::where('quiz_id', $quiz)->inRandomOrder()->get();
+            $myquiz->question = Question::where('quiz_id', $quiz)->get();
             foreach($myquiz->question as $question){
-                $question->questionAnswer = QuestionsAnswer::where('question_id',$question->id)->inRandomOrder()->paginate(10) ;
+                $question->questionAnswer = QuestionsAnswer::where('question_id',$question->id)->inRandomOrder()->get() ;
             }
             return view('quizzes.resolve',[
                 'myquiz' => $myquiz,

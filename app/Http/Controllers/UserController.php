@@ -60,7 +60,8 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'passwordConfirmation' => bcrypt($request->passwordConfirmation)
+            'passwordConfirmation' => bcrypt($request->passwordConfirmation),
+            'phone_number' => $request->phone,
         ]);
         return Redirect(route('users.index'));
     }
@@ -179,6 +180,6 @@ class UserController extends Controller
                 $i++;
             }while($i <count($score));
         }
-        return Redirect(route('users.index'));
+        return view('charts.message');
     }
 }

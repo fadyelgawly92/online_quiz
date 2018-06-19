@@ -86,6 +86,6 @@ Route::post('chart/show','UserController@chart')->name('graph.view');
 });
 //registration of quiz
 Route::get('mail/{user}/quiz/{quiz}','QuizController@register')->name('quiz.register');
-Route::post('register/{user}/quiz/{quiz}','QuizController@quiz_answer')->name('quiz.answer');
+Route::get('register/{user}/quiz/{quiz}','QuizController@quiz_answer')->name('quiz.answer');
 Route::get('update/session','QuizController@update_session')->name('session.update');
 Route::post('quiz/{quiz}/user/{user}/submit','QuizController@submit_quiz')->name('quiz.submit');

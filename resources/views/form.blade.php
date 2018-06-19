@@ -35,6 +35,11 @@
         </div>
         <br/>
         <br/>
+        <div class="form-group">
+        Phone-Number : <input class="form-control" type="tel" name="phone">
+        </div>
+        <br/>
+        <br/>
         <input type="submit" value="create" class="btn btn-danger">
     </form>
 </div>

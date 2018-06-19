@@ -40,6 +40,11 @@
         @endforeach
         </div>
     @endif
+    @if ($quiz->question->total() > $quiz->question->perPage())
+        <div class="pagination-wrapper">
+            {{ $quiz->question->links() }}
+        </div>
+    @endif
     </div>
     <div class="form-group {{ $errors->has('date') ? 'has-error' : '' }}">
         {{ Form::label('date', 'sending time', ['class'=>'control-label']) }}

@@ -22,7 +22,7 @@
 
 <div class="container">
     <h3 class="page-title">quiz</h3>
-    {!! Form::open(['method' => 'POST', 'route' => array('quiz.answer', $quiz ,$user)  ]) !!}
+    {!! Form::open(['method' => 'GET', 'route' => array('quiz.answer', $quiz ,$user)  ]) !!}
     {{csrf_field()}}
     <div class="panel panel-default">
         <div class="panel-heading">

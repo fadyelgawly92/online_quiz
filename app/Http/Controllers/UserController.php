@@ -41,7 +41,11 @@ class UserController extends Controller
 
     public function get_data_approved()
     {
-        $query = DB::table('model_has_permissions')->leftJoin('users', 'model_has_permissions.model_id', '=', 'users.id')->get();
+        $firstQuery = DB::table('permissions')->where('name','=','admin')->select('id')->first();
+        // dd($firstQuery->id);
+        $query = DB::table('model_has_permissions')->where('permission_id','!=',$firstQuery->id)
+        ->leftJoin('users', 'model_has_permissions.model_id', '=', 'users.id')->get();
+        // dd($query);
         return DataTables::of($query)->toJson();
     }
 
@@ -78,10 +82,33 @@ class UserController extends Controller
         return response()->json(['status' => true]);
     }
 
+    public function delete_approved($id)
+    {
+        $user = User::find($id);
+        $user->revokePermissionTo('Approved');
+        return response()->json(['status' => true]);
+    }
+
     public function signout()
     {
         Auth::logout();
         return Redirect(route('home'));
+    }
+
+    public function registered()
+    {
+        return view('register');
+    }
+
+    public function make_admin($id)
+    {
+        $user = User::find($id);
+        $permisionExist = DB::table('permissions')->where('name','=','admin')->get();
+        if($permisionExist->isEmpty()){
+        $permission = Permission::create(['name' => 'admin']);
+        }
+        $user->givePermissionTo('admin');
+        return redirect(route('users.index'));
     }
 
     public function chartControl()

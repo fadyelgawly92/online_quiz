@@ -37,13 +37,15 @@
                                         //here am just passing a hash to the route helper function and will be replaced with the real id from javascript part
                                         var mockedEditRoute = '{{route('users.edit','#replaceMeWithUserId')}}'
                                         var mockedDeleteRoute = '{{route('users.delete','#replaceMeWithUserId')}}'
+                                        var mockedAdminRoute = '{{route('users.admin','#replaceMeWithUserId')}}'
 
                                         //here i replaced the hashed string with real id
                                         var realEditRoute= mockedEditRoute.replace('#replaceMeWithUserId',row.id);
-                                        var realDeleteRoute= mockedDeleteRoute.replace('#replaceMeWithUserId',row.id);  
+                                        var realDeleteRoute= mockedDeleteRoute.replace('#replaceMeWithUserId',row.id);
+                                        var realAdminRoute= mockedAdminRoute.replace('#replaceMeWithUserId',row.id);  
 
                                         //then here i returned the real url with id
-                                        return "<a href='"+realEditRoute+"' class='btn btn-primary' style='margin-right:5px'> approve </a><button  onclick='getMessage(\"" + realDeleteRoute + '\",\"' + row.id + "\")' id="+row.id+" class='btn btn-danger'>decline</button>"
+                                        return "<a href='"+realEditRoute+"' class='btn btn-primary' style='margin-right:5px'> approve </a><button  onclick='getMessage(\"" + realDeleteRoute + '\",\"' + row.id + "\")' id="+row.id+" class='btn btn-danger'>decline</button><a href='"+realAdminRoute+"' class='btn btn-warning' style='margin-right:5px'> Make Admin </a>"
                                     }
                                 }
                                 

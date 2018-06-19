@@ -26,7 +26,7 @@ Auth::routes();
 
 
 Route::get('/signout','UserController@signout')->name('signout');
-
+Route::get('/registered','UserController@registered')->name('registered');
 //all about user
 Route::group(['middleware' => ['permission:admin']], function () {
 
@@ -43,6 +43,8 @@ Route::get('users/approved','UserController@approvedIndex')->name('users.approve
 
 Route::get('users/{id}/edit','UserController@edit')->name('users.edit');
 Route::get('users/{id}/delete','UserController@delete')->name('users.delete');
+Route::get('users/{id}/delete/approved','UserController@delete_approved')->name('approved.users.delete');
+Route::get('users/{id}/admin','UserController@make_admin')->name('users.admin');
 Route::get('users/{id}/message','UserController@message')->name('users.message');
 //end users
 

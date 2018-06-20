@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Quiz;
+use App\Result;
 use App\StudentsScores;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreFormRequest ;
@@ -79,6 +80,8 @@ class UserController extends Controller
 
     public function delete($id)
     {
+        Result::where('user_id',$id)->delete();
+        StudentsScores::where('user_id',$id)->delete();
         User::where('id',$id)->delete();
         return response()->json(['status' => true]);
     }

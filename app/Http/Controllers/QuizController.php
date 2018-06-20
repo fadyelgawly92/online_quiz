@@ -79,6 +79,7 @@ class QuizController extends Controller
     public function destroy($id)
     {
         Result::where('quiz_id',$id)->delete();
+        StudentsScores::where('quiz_id',$id)->delete();
         $quiz = Quiz::findorFail($id);
         $questionId = Question::where('quiz_id',$id)->select('id')->get();
         for($i = 0;$i < count($questionId);$i++){
@@ -172,6 +173,7 @@ class QuizController extends Controller
 
     public function submit_quiz(Request $request , $quiz ,$user)
     {
+        // dd($quiz);
         $score = 0 ;
         $total = count($request->input('questions'));
         //  dd($request->input('questions'));

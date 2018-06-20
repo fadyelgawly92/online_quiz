@@ -139,7 +139,7 @@ class QuizController extends Controller
         // dd($newvalue);
         if(!$email->isEmpty() && !$name->isEmpty()){
             $myquiz = Quiz::findorFail($quiz);
-            $myquiz->question = Question::where('quiz_id', $quiz)->get();
+            $myquiz->question = Question::where('quiz_id', $quiz)->paginate(10);
             foreach($myquiz->question as $question){
                 $question->questionAnswer = QuestionsAnswer::where('question_id',$question->id)->inRandomOrder()->get() ;
             }

@@ -62,6 +62,11 @@
         @endforeach
         </div>
     @endif
+    @if ($myquiz->question->total() > $myquiz->question->perPage())
+        <div class="pagination-wrapper">
+            {{ $myquiz->question->appends(Illuminate\Support\Facades\Input::except('page'))->links() }}
+        </div>
+    @endif
     </div>
 
     {!! Form::submit('submit', array('class' => 'btn btn-danger' , 'id' => 'submitBtn')  ) !!}

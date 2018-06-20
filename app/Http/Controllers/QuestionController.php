@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Quiz;
 use App\Question;
 use App\QuestionsAnswer;
+use App\Result;
 use Illuminate\Support\Facades\Redirect;
 use App\DataTables\UsersDataTable;
 use App\DataTables\UsersDataTablesEditor;
@@ -85,6 +86,7 @@ class QuestionController extends Controller
 
     public function delete($id)
     {
+        Result::where('question_id',$id)->delete();
         DB::table('questions_answers')->where('question_id','=',$id)->delete();
         $question = Question::findOrFail($id);
         $question->delete();

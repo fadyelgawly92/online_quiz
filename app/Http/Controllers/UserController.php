@@ -51,7 +51,7 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('form');
+        return view('myform');
     }
 
     public function store(StoreFormRequest $request)

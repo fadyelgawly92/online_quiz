@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Quiz;
 use App\Question;
 use App\QuestionsAnswer;
+use App\Result;
 use Illuminate\Support\Facades\Redirect;
 use App\DataTables\UsersDataTable;
 use App\DataTables\UsersDataTablesEditor;
@@ -64,8 +65,9 @@ class QuestionsAnswerController extends Controller
         return Redirect(route('questions_answer.index'));
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
+        Result::where('question_answer_id',$id)->delete();
         $questions_option = QuestionsAnswer::findOrFail($id);
         $questions_option->delete();
         return Redirect(route('questions_answer.index'));

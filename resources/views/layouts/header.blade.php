@@ -5,7 +5,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html><meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Starter</title>
+    <title>Quizzy</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="{{asset("/bower_components/bootstrap/dist/css/bootstrap.min.css")}}">
@@ -46,7 +46,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>4|</b>S</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>4|</b>SEASON</span>
+            <span class="logo-lg"><b></b>Quizzy</span>
         </a>
 
         <!-- Header Navbar -->
@@ -158,14 +158,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <!-- The user image in the navbar-->
                         <img src="{{ asset("/bower_components/admin-lte/dist/img/user2-160x160.jpg") }}" class="user-image" alt="User Image"/>
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                        <span class="hidden-xs">Alexander Pierce</span>
+                        <span class="hidden-xs">Admin</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- The user image in the menu -->
                         <li class="user-header">
                             <img src="{{ asset("/bower_components/admin-lte/dist/img/user2-160x160.jpg") }}" class="img-circle" alt="User Image" />
                             <p>
-                                Alexander Pierce - Web Developer
+                                Admin - Web Developer
                                 <small>Member since Nov. 2012</small>
                             </p>
                         </li>

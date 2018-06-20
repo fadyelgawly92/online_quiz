@@ -78,6 +78,7 @@ class QuizController extends Controller
 
     public function destroy($id)
     {
+        Result::where('quiz_id',$id)->delete();
         $quiz = Quiz::findorFail($id);
         $questionId = Question::where('quiz_id',$id)->select('id')->get();
         for($i = 0;$i < count($questionId);$i++){
@@ -130,18 +131,21 @@ class QuizController extends Controller
         // dd($countDown);
         $then = Carbon::now()->addMinutes($countDown)->timestamp;
         $total = $then - $now;
+        $request->session()->forget('countDown');
         // $request->session()->forget('mytime');
-        // $time = gmdate("H:i:s", $total);    
+        // $time = gmdate("H:i:s", $total); 
+        // $request->session()->put('mytime',$total);   
         if(! $request->session()->has('mytime')){
             $request->session()->start();
             $request->session()->put('mytime',$total);
         }
         // dd($newvalue);
+        // dd($request->has('page'));
         if(!$email->isEmpty() && !$name->isEmpty()){
             $myquiz = Quiz::findorFail($quiz);
-            $myquiz->question = Question::where('quiz_id', $quiz)->paginate(10);
+            $myquiz->question = Question::where('quiz_id', $quiz)->get();
             foreach($myquiz->question as $question){
-                $question->questionAnswer = QuestionsAnswer::where('question_id',$question->id)->inRandomOrder()->get() ;
+                $question->questionAnswer = QuestionsAnswer::where('question_id',$question->id)->get() ;
             }
             return view('quizzes.resolve',[
                 'myquiz' => $myquiz,

@@ -51,6 +51,11 @@
         {{ Form::input('datetime-local', 'date', null, ['class'=>'form-control']) }}		
         {{ $errors->first('date', '<span class="help-block">:message</span>') }}
     </div>
+    <div class="form-group {{ $errors->has('number') ? 'has-error' : '' }}">
+        {{ Form::label('time', 'Count Down', ['class'=>'control-label']) }}
+        {!!  Form::input('number', 'time', null, ['id' => 'weight', 'class' => 'form-control', 'min' => 1, 'max' => 300, 'required' => 'required']) !!}		
+        {{ $errors->first('date', '<span class="help-block">:message</span>') }}
+    </div>
 
 
 

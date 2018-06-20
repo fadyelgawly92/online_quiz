@@ -90,7 +90,8 @@ class QuizController extends Controller
 
     public function send_quiz(Request $request,$quiz)
     {
-        
+        $countDown = $request->input('time');
+        $request->session()->put('countDown',$countDown);
         $date = $request->input('date');
         $time = \Carbon\Carbon::parse($date)->timestamp;
         $now = Carbon::now()->timestamp;
@@ -124,8 +125,12 @@ class QuizController extends Controller
         $email = User::where('email',$request->email)->get();
         $name = User::where('name',$request->name)->get();
         $now = Carbon::now()->timestamp;
-        $then = Carbon::now()->addMinutes(30)->timestamp;
+        $countDown = $request->session()->get('countDown');
+        $countDown = intval($countDown);
+        // dd($countDown);
+        $then = Carbon::now()->addMinutes($countDown)->timestamp;
         $total = $then - $now;
+        // $request->session()->forget('mytime');
         // $time = gmdate("H:i:s", $total);    
         if(! $request->session()->has('mytime')){
             $request->session()->start();
